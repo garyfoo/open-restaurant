@@ -13,6 +13,9 @@ final class Menu: Codable {
     var name: String
     var description: String
     var price: Double
+    var categories: Siblings<Menu, Category, MenuCategoryPivot> {
+        return siblings()
+    }
     
     init(name: String, description: String, price: Double) {
         self.name = name

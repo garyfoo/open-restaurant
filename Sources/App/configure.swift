@@ -25,7 +25,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     //    databases.add(database: sqlite, as: .sqlite)
     //    services.register(databases)
     let hostname = Environment.get("DATABASE_HOSTNAME") ?? "localhost"
-    let username = Environment.get("DATABASE_USER") ?? "or-swift"
+    let username = Environment.get("DATABASE_USER") ?? "or-user"
     let password = Environment.get("DATABASE_PASSWORD") ?? "password"
     let databaseName: String
     let databasePort: Int
