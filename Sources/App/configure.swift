@@ -48,12 +48,10 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     // Configure migrations
     var migrations = MigrationConfig()
-    // Because you’re linking the acronym’s userID property to the User table, you must create the User table first.
-    // In configure.swift move the User migration to before the Acronym migration:
-//    migrations.add(model: ImageItem.self, database: .psql)
+    migrations.add(model: Image.self, database: .psql)
     migrations.add(model: Menu.self, database: .psql)
-//    migrations.add(model: Category.self, database: .psql)
-//    migrations.add(model: MenuItemCategoryPivot.self, database: .psql)
+    migrations.add(model: Category.self, database: .psql)
+    migrations.add(model: MenuCategoryPivot.self, database: .psql)
     services.register(migrations)
     
     // Configure the rest of your application here

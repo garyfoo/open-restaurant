@@ -17,6 +17,10 @@ struct MenuController: RouteCollection {
         menuRoutes.get(Menu.parameter, use: getHandler)
         menuRoutes.put(Menu.parameter, use: updateHandler)
         menuRoutes.delete(Menu.parameter, use: deleteHandler)
+        menuRoutes.get(Menu.parameter, "images", use: getImageHandler)
+        menuRoutes.post(Menu.parameter, "categories", Category.parameter, use: addCategoriesHandler)
+        menuRoutes.get(Menu.parameter, "categories", use: getCategoriesHandler)
+        menuRoutes.delete(Menu.parameter, "categories", Category.parameter, use: removeCategoriesHandler)
     }
     
     func getAllHandler(_ req: Request) throws -> Future<[Menu]> {
@@ -46,6 +50,30 @@ struct MenuController: RouteCollection {
     // DELETE https://localhost:8080/api/menu/1: delete the menu with ID 1.
     func deleteHandler(_ req: Request) throws -> Future<HTTPStatus> {
         return try req.parameters.next(Menu.self).delete(on: req).transform(to: HTTPStatus.noContent)
+    }
+    
+    func getImageHandler(_ req: Request) throws -> Future<Image> {
+        return try req.parameters.next(Menu.self).flatMap(to: Image.self) { menu in
+            menu.image.get(on: req)
+        }
+    }
+    
+    func addCategoriesHandler(_ req: Request) throws -> Future<HTTPStatus> {
+        return try flatMap(to: HTTPStatus.self, req.parameters.next(Menu.self), req.parameters.next(Category.self)) { menu, category in
+            return menu.categories.attach(category, on: req).transform(to: .created)
+        }
+    }
+    
+    func getCategoriesHandler(_ req: Request) throws -> Future<[Category]> {
+        return try req.parameters.next(Menu.self).flatMap(to: [Category].self) { menu in
+            try menu.categories.query(on: req).all()
+        }
+    }
+    
+    func removeCategoriesHandler(_ req: Request) throws -> Future<HTTPStatus> {
+        return try flatMap(to: HTTPStatus.self, req.parameters.next(Menu.self), req.parameters.next(Category.self)) { menu, category in
+            return menu.categories.detach(category, on: req).transform(to: .noContent)
+        }
     }
     
 }
