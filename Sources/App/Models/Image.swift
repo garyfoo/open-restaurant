@@ -11,9 +11,9 @@ import FluentPostgreSQL
 
 final class Image: Codable {
     var id: UUID?
-    var name: String
+    var name: URL
     
-    init(name: String) {
+    init(name: URL) {
         self.name = name
     }
 }
@@ -24,7 +24,7 @@ extension Image: Migration {}
 extension Image: Parameter {}
 
 extension Image {
-    var menus: Children<Image, Menu> {
-        return children(\.imageID)
+    var menuItems: Siblings<Image, MenuItem, MenuItemImagePivot> {
+        return siblings()
     }
 }

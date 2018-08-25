@@ -23,7 +23,7 @@ extension Category: Migration {}
 extension Category: Parameter {}
 
 extension Category {
-    var menus: Siblings<Category, Menu, MenuCategoryPivot> {
+    var menuItems: Siblings<Category, MenuItem, MenuItemCategoryPivot> {
         return siblings()
     }
 }

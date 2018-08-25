@@ -13,7 +13,7 @@ struct ImagesController: RouteCollection {
         imagesRoute.post(Image.self, use: createHandler)
         imagesRoute.get(use: getAllHandler)
         imagesRoute.get(Image.parameter, use: getHandler)
-        imagesRoute.get(Image.parameter, "menu", use: getMenusHandler)
+        imagesRoute.get(Image.parameter, "menu", use: getMenuItemsHandler)
     }
     
     func createHandler(_ req: Request, image: Image) throws -> Future<Image> {
@@ -28,9 +28,9 @@ struct ImagesController: RouteCollection {
         return try req.parameters.next(Image.self)
     }
     
-    func getMenusHandler(_ req: Request) throws -> Future<[Menu]> {
-        return try req.parameters.next(Image.self).flatMap(to: [Menu].self) { image in
-            try image.menus.query(on: req).all()
+    func getMenuItemsHandler(_ req: Request) throws -> Future<[MenuItem]> {
+        return try req.parameters.next(Image.self).flatMap(to: [MenuItem].self) { image in
+            try image.menuItems.query(on: req).all()
         }
     }
 }

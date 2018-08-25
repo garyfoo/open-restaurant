@@ -48,16 +48,19 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     // Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Image.self, database: .psql)
-    migrations.add(model: Menu.self, database: .psql)
+    migrations.add(model: MenuItem.self, database: .psql)
     migrations.add(model: Category.self, database: .psql)
-    migrations.add(model: MenuCategoryPivot.self, database: .psql)
+    migrations.add(model: Image.self, database: .psql)
+    migrations.add(model: MenuItemImagePivot.self, database: .psql)
+    migrations.add(model: MenuItemCategoryPivot.self, database: .psql)
     services.register(migrations)
+    
+    let serverConfigure = NIOServerConfig.default(hostname: "localhost", port: 8090)
+    services.register(serverConfigure)
     
     // Configure the rest of your application here
     var commandConfig = CommandConfig.default()
     commandConfig.useFluentCommands()
     services.register(commandConfig)
-
 
 }
