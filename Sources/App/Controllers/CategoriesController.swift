@@ -20,8 +20,15 @@ struct CategoriesController: RouteCollection {
         return category.save(on: req)
     }
     
-    func getAllHandler(_ req: Request) throws -> Future<[Category]> {
+    func getAllCategories(on req: Request) -> Future<[Category]> {
         return Category.query(on: req).all()
+    }
+
+    func getAllHandler(_ req: Request) throws -> Future<Categories> {
+        return getAllCategories(on: req).map { categories in
+            let categoryNames = categories.map { $0.name }
+            return Categories(categories: categoryNames)
+        }
     }
     
     func getHandler(_ req: Request) throws -> Future<Category> {

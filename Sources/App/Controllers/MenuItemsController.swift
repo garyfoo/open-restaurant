@@ -18,17 +18,23 @@ struct MenuItemsController: RouteCollection {
         menuItemRoutes.put(MenuItem.parameter, use: updateHandler)
         menuItemRoutes.delete(MenuItem.parameter, use: deleteHandler)
         
-        menuItemRoutes.post(MenuItem.parameter, "image", Image.parameter, use: addImagesHandler)
-        menuItemRoutes.get(MenuItem.parameter, "image", use: getImagesHandler)
-        menuItemRoutes.delete(MenuItem.parameter, "image", Image.parameter, use: removeImagesHandler)
+        menuItemRoutes.post(MenuItem.parameter, "images", Image.parameter, use: addImagesHandler)
+        menuItemRoutes.get(MenuItem.parameter, "images", use: getImagesHandler)
+        menuItemRoutes.delete(MenuItem.parameter, "images", Image.parameter, use: removeImagesHandler)
 
         menuItemRoutes.post(MenuItem.parameter, "category", Category.parameter, use: addCategoriesHandler)
         menuItemRoutes.get(MenuItem.parameter, "category", use: getCategoriesHandler)
         menuItemRoutes.delete(MenuItem.parameter, "category", Category.parameter, use: removeCategoriesHandler)
     }
     
-    func getAllHandler(_ req: Request) throws -> Future<[MenuItem]> {
+    func getAllMenuItems(on req: Request) throws -> Future<[MenuItem]> {
         return MenuItem.query(on: req).all()
+    }
+    
+    func getAllHandler(_ req: Request) throws -> Future<Items> {
+        return try getAllMenuItems(on: req).map { menuItems in
+            return Items(items: menuItems)
+        }
     }
     
     // POST https://localhost:8090/api/menu: create a new menu.
