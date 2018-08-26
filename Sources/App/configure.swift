@@ -13,7 +13,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     /// Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-    /// middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
+    middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
     
@@ -50,8 +50,6 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var migrations = MigrationConfig()
     migrations.add(model: MenuItem.self, database: .psql)
     migrations.add(model: Category.self, database: .psql)
-    migrations.add(model: Image.self, database: .psql)
-    migrations.add(model: MenuItemImagePivot.self, database: .psql)
     migrations.add(model: MenuItemCategoryPivot.self, database: .psql)
     services.register(migrations)
     

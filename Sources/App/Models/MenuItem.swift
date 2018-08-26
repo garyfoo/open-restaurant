@@ -13,6 +13,7 @@ final class MenuItem: Codable {
     var name: String
     var description: String
     var price: Double
+    var imageName: URL?
     
     init(name: String, description: String, price: Double) {
         self.name = name
@@ -27,10 +28,6 @@ extension MenuItem: Migration {}
 extension MenuItem: Parameter {}
 
 extension MenuItem {
-    
-    var images: Siblings<MenuItem, Image, MenuItemImagePivot> {
-        return siblings()
-    }
     
     var categories: Siblings<MenuItem, Category, MenuItemCategoryPivot> {
         return siblings()

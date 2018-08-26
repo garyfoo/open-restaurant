@@ -10,23 +10,28 @@ import Fluent
 
 struct MenuItemsController: RouteCollection {
     func boot(router: Router) throws {
-        // GET https://localhost:8090/api/menu/: get all the menu items.
-        let menuItemRoutes = router.grouped("api", "menu")
+        
+        let menuItemRoutes = router.grouped("menu")
         menuItemRoutes.get(use: getAllHandler)
         menuItemRoutes.post(MenuItem.self, use: createHandler)
         menuItemRoutes.get(MenuItem.parameter, use: getHandler)
         menuItemRoutes.put(MenuItem.parameter, use: updateHandler)
         menuItemRoutes.delete(MenuItem.parameter, use: deleteHandler)
-        
-        menuItemRoutes.post(MenuItem.parameter, "images", Image.parameter, use: addImagesHandler)
-        menuItemRoutes.get(MenuItem.parameter, "images", use: getImagesHandler)
-        menuItemRoutes.delete(MenuItem.parameter, "images", Image.parameter, use: removeImagesHandler)
 
         menuItemRoutes.post(MenuItem.parameter, "category", Category.parameter, use: addCategoriesHandler)
         menuItemRoutes.get(MenuItem.parameter, "category", use: getCategoriesHandler)
         menuItemRoutes.delete(MenuItem.parameter, "category", Category.parameter, use: removeCategoriesHandler)
+        
+        // GET http://localhost:8090/menu/entrees/ : get all menu items with category, entrees
+//        menuItemRoutes.get(String.parameter, use: getCategoryMenuItemsHandler)
+        
     }
     
+//    func getCategoryMenuItemsHandler(_ req: Request) throws -> Future<Items> {
+//        let categoryName = try req.parameters.next(String.self)
+//        return try MenuItem.query(on: req).filter(\M)
+//    }
+//
     func getAllMenuItems(on req: Request) throws -> Future<[MenuItem]> {
         return MenuItem.query(on: req).all()
     }
@@ -37,17 +42,14 @@ struct MenuItemsController: RouteCollection {
         }
     }
     
-    // POST https://localhost:8090/api/menu: create a new menu.
     func createHandler(_ req: Request, menuItem: MenuItem) throws -> Future<MenuItem> {
         return menuItem.save(on: req)
     }
     
-    // GET https://localhost:8090/api/menu/1: get the menu with ID 1.
     func getHandler(_ req: Request) throws -> Future<MenuItem> {
         return try req.parameters.next(MenuItem.self)
     }
     
-    // PUT https://localhost:8090/api/menu/1: update the menu with ID 1.
     func updateHandler(_ req: Request) throws -> Future<MenuItem> {
         return try flatMap(to: MenuItem.self, req.parameters.next(MenuItem.self), req.content.decode(MenuItem.self)) { menuItem, updatedMenuItem in
             menuItem.name = updatedMenuItem.name
@@ -57,27 +59,8 @@ struct MenuItemsController: RouteCollection {
         }
     }
     
-    // DELETE https://localhost:8090/api/menu/1: delete the menu with ID 1.
     func deleteHandler(_ req: Request) throws -> Future<HTTPStatus> {
         return try req.parameters.next(MenuItem.self).delete(on: req).transform(to: HTTPStatus.noContent)
-    }
-    
-    func addImagesHandler(_ req: Request) throws -> Future<HTTPStatus> {
-        return try flatMap(to: HTTPStatus.self, req.parameters.next(MenuItem.self), req.parameters.next(Image.self)) { menuItem, image in
-            return menuItem.images.attach(image, on: req).transform(to: .created)
-        }
-    }
-    
-    func getImagesHandler(_ req: Request) throws -> Future<[Image]> {
-        return try req.parameters.next(MenuItem.self).flatMap(to: [Image].self) { menuItem in
-            try menuItem.images.query(on: req).all()
-        }
-    }
-    
-    func removeImagesHandler(_ req: Request) throws -> Future<HTTPStatus> {
-        return try flatMap(to: HTTPStatus.self, req.parameters.next(MenuItem.self), req.parameters.next(Image.self)) { menuItem, image in
-            return menuItem.images.detach(image, on: req).transform(to: .noContent)
-        }
     }
     
     func addCategoriesHandler(_ req: Request) throws -> Future<HTTPStatus> {
