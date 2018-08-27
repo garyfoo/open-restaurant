@@ -13,12 +13,14 @@ final class MenuItem: Codable {
     var name: String
     var description: String
     var price: Double
+    var category: String
     var imageName: URL?
     
-    init(name: String, description: String, price: Double) {
+    init(name: String, description: String, price: Double, category: String) {
         self.name = name
         self.description = description
         self.price = price
+        self.category = category
     }
 }
 
@@ -26,11 +28,3 @@ extension MenuItem: PostgreSQLModel {}
 extension MenuItem: Content {}
 extension MenuItem: Migration {}
 extension MenuItem: Parameter {}
-
-extension MenuItem {
-    
-    var categories: Siblings<MenuItem, Category, MenuItemCategoryPivot> {
-        return siblings()
-    }
-    
-}

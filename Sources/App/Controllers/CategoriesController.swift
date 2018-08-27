@@ -13,7 +13,6 @@ struct CategoriesController: RouteCollection {
         categoriesRoute.post(Category.self, use: createHandler)
         categoriesRoute.get(use: getAllHandler)
         categoriesRoute.get(Category.parameter, use: getHandler)
-        categoriesRoute.get(Category.parameter, "menu", use: getMenuItemsHandler)
     }
     
     func createHandler(_ req: Request, category: Category) throws -> Future<Category> {
@@ -35,9 +34,4 @@ struct CategoriesController: RouteCollection {
         return try req.parameters.next(Category.self)
     }
     
-    func getMenuItemsHandler(_ req: Request) throws -> Future<[MenuItem]> {
-        return try req.parameters.next(Category.self).flatMap(to: [MenuItem].self) { category in
-            try category.menuItems.query(on: req).all()
-        }
-    }
 }

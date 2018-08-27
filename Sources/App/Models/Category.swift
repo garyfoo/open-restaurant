@@ -21,9 +21,3 @@ extension Category: PostgreSQLModel {}
 extension Category: Content {}
 extension Category: Migration {}
 extension Category: Parameter {}
-
-extension Category {
-    var menuItems: Siblings<Category, MenuItem, MenuItemCategoryPivot> {
-        return siblings()
-    }
-}

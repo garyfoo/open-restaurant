@@ -50,7 +50,6 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var migrations = MigrationConfig()
     migrations.add(model: MenuItem.self, database: .psql)
     migrations.add(model: Category.self, database: .psql)
-    migrations.add(model: MenuItemCategoryPivot.self, database: .psql)
     services.register(migrations)
     
     let serverConfigure = NIOServerConfig.default(hostname: "localhost", port: 8090)
