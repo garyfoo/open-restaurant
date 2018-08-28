@@ -7,12 +7,8 @@
 
 import Vapor
 
-final class Items: Codable {
+struct Items: Codable {
     var items: [MenuItem]
-    
-    init(items: [MenuItem]) {
-        self.items = items
-    }
 }
 
 extension Items: Content {}
