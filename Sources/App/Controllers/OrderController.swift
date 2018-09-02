@@ -28,5 +28,9 @@ struct Order: Content {
 }
 
 struct PreparationTime: Content {
-    var prepTime: Int
+    let prepTime: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case prepTime = "preparation_time"
+    }
 }
