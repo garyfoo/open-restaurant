@@ -21,3 +21,7 @@ extension Category: PostgreSQLModel {}
 extension Category: Content {}
 extension Category: Migration {}
 extension Category: Parameter {}
+
+struct Categories: Content {
+    var categories: [String]
+}

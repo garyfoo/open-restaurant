@@ -17,3 +17,12 @@ final class PreparationTime: Codable {
 }
 
 extension PreparationTime: Content {}
+
+
+final class Order: Content, Codable {
+    var menuIds: [Int]
+    
+    init(menuIds: [Int]) {
+        self.menuIds = menuIds
+    }
+}

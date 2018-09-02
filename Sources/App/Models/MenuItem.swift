@@ -28,3 +28,8 @@ extension MenuItem: PostgreSQLModel {}
 extension MenuItem: Content {}
 extension MenuItem: Migration {}
 extension MenuItem: Parameter {}
+
+
+struct Items: Content {
+    var items: [MenuItem]
+}
