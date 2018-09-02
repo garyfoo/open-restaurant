@@ -11,12 +11,22 @@ import Fluent
 struct OrderController: RouteCollection {
     func boot(router: Router) throws {
         let orderRoute = router.grouped("order")
-        orderRoute.post(use: orderHandler)
+        orderRoute.post(Order.self, use: orderHandler)
     }
     
-    func orderHandler(_ req: Request) throws -> Future<HTTPStatus> {
-        print(req.parameters)
-        return req.future().transform(to: HTTPStatus.ok)
+    func orderHandler(_ req: Request, data: Order) throws -> PreparationTime {
+        let order = data
+        print(order)
+        let prepTime = PreparationTime(prepTime: 5)
+        return prepTime
     }
     
+}
+
+struct Order: Content {
+    var menuIds: [Int]
+}
+
+struct PreparationTime: Content {
+    var prepTime: Int
 }

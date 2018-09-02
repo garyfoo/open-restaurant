@@ -8,21 +8,12 @@
 import Vapor
 import FluentPostgreSQL
 
-final class PreparationTime: Codable {
-    var prepTime: Int
-    
-    init(prepTime: Int) {
-        self.prepTime = prepTime
-    }
-}
-
-extension PreparationTime: Content {}
-
-
-final class Order: Content, Codable {
-    var menuIds: [Int]
-    
-    init(menuIds: [Int]) {
-        self.menuIds = menuIds
-    }
-}
+//final class PreparationTime: Codable {
+//    var prepTime: Int
+//
+//    init(prepTime: Int) {
+//        self.prepTime = prepTime
+//    }
+//}
+//
+//extension PreparationTime: Content {}

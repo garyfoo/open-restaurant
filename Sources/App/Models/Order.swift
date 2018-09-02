@@ -8,17 +8,17 @@
 import Vapor
 import FluentPostgreSQL
 
-final class Order: Codable {
-    var id: Int?
-    var menuIds: [Int]
-    var timestamp: Date
-    
-    init(menuIds: [Int], timestamp: Date) {
-        self.menuIds = menuIds
-        self.timestamp = Date()
-    }
-}
-
-extension Order: PostgreSQLModel {}
-extension Order: Content {}
-extension Order: Migration {}
+//final class Order: Codable {
+//    var id: Int?
+//    var menuIds: [Int]
+//    var timestamp: Date
+//    
+//    init(menuIds: [Int], timestamp: Date) {
+//        self.menuIds = menuIds
+//        self.timestamp = Date()
+//    }
+//}
+//
+//extension Order: PostgreSQLModel {}
+//extension Order: Content {}
+//extension Order: Migration {}
