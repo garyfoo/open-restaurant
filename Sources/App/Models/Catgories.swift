@@ -7,12 +7,8 @@
 
 import Vapor
 
-final class Categories: Codable {
+struct Categories: Codable {
     var categories: [String]
-    
-    init(categories: [String]) {
-        self.categories = categories
-    }
 }
 
 extension Categories: Content {}
