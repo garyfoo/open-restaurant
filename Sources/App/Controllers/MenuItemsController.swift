@@ -17,19 +17,16 @@ struct MenuItemsController: RouteCollection {
         menuItemRoutes.get(MenuItem.parameter, use: getHandler)
         menuItemRoutes.put(MenuItem.parameter, use: updateHandler)
         menuItemRoutes.delete(MenuItem.parameter, use: deleteHandler)
-        
-        // GET http://localhost:8090/menu/entrees/ : get all menu items with category, entrees
-//        menuItemRoutes.get(String.parameter, use: getCategoryMenuItemsHandler)
-        
     }
     
-//    func getCategoryMenuItemsHandler(_ req: Request) throws -> Future<Items> {
-//        let categoryName = try req.parameters.next(String.self)
-//        return try MenuItem.query(on: req).filter(\M)
-//    }
-//
     func getAllMenuItems(on req: Request) throws -> Future<[MenuItem]> {
-        return MenuItem.query(on: req).all()
+        if let categoryQuery = req.query[String.self, at: "category"] {
+            return MenuItem.query(on: req).group(.or) { or in
+                or.filter(\.category == categoryQuery)
+                }.all()
+        } else {
+            return MenuItem.query(on: req).all()
+        }
     }
     
     func getAllHandler(_ req: Request) throws -> Future<Items> {

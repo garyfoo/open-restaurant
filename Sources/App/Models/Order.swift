@@ -6,19 +6,15 @@
 //
 
 import Vapor
-import FluentPostgreSQL
 
-//final class Order: Codable {
-//    var id: Int?
-//    var menuIds: [Int]
-//    var timestamp: Date
-//    
-//    init(menuIds: [Int], timestamp: Date) {
-//        self.menuIds = menuIds
-//        self.timestamp = Date()
-//    }
-//}
-//
-//extension Order: PostgreSQLModel {}
-//extension Order: Content {}
-//extension Order: Migration {}
+struct Order: Content {
+    var menuIds: [Int]
+}
+
+struct PreparationTime: Content {
+    let prepTime: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case prepTime = "preparation_time"
+    }
+}
