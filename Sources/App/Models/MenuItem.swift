@@ -14,13 +14,23 @@ final class MenuItem: Codable {
     var description: String
     var price: Double
     var category: String
-    var imageName: URL?
+    var imageName: URL
     
-    init(name: String, description: String, price: Double, category: String) {
+    init(name: String, description: String, price: Double, category: String, imageName: URL) {
         self.name = name
         self.description = description
         self.price = price
         self.category = category
+        self.imageName = imageName
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case description
+        case price
+        case category
+        case imageName = "image_url"
     }
 }
 

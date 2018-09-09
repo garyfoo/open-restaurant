@@ -48,6 +48,7 @@ struct MenuItemsController: RouteCollection {
             menuItem.name = updatedMenuItem.name
             menuItem.description = updatedMenuItem.description
             menuItem.price = updatedMenuItem.price
+            menuItem.imageName = updatedMenuItem.imageName
             return menuItem.save(on: req)
         }
     }
