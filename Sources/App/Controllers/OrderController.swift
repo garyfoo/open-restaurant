@@ -17,10 +17,9 @@ struct OrderController: RouteCollection {
     
     func orderHandler(_ req: Request, data: Order) throws -> Future<[MenuItem]> {
         let orderIds = data.menuIds
-        return MenuItem.query(on: req).group(.or) { or in
-            or.filter(\.id ~~ orderIds)
-            }.all()
-//        let prepTime = PreparationTime(prepTime: 5)
-//        return prepTime
+        return MenuItem.query(on: req).filter(\.id ~~ orderIds).all().map { items in
+            print(items.map { return $0.name })
+            return items
+        }
     }
 }
