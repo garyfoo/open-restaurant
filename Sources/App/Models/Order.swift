@@ -8,7 +8,7 @@
 import Vapor
 
 struct Order: Content {
-    var menuIds: [Int]
+    let menuIds: [Int]
 }
 
 struct PreparationTime: Content {

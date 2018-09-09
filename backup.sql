@@ -122,7 +122,12 @@ COPY public."Category" (id, name) FROM stdin;
 --
 
 COPY public."MenuItem" (id, name, description, price, category, image_url) FROM stdin;
-1	Spaghetti and Meatballs	Seasoned meatballs on top of freshly-made spaghetti. Served with a robust tomato sauce.	9	entrees	{"relative": "http://localhost:8090/images/chicken-noodle-soup.jp2"}
+2	Margherita Pizza	Tomato sauce, fresh mozzarella, basil, and extra-virgin olive oil.	10	entrees	{"relative": "http://localhost:8090/images/margherita-pizza.jpg"}
+3	Grilled Steelhead Trout Sandwich	Pacific steelhead trout with lettuce, tomato, and red onion.	9	entrees	{"relative": "http://localhost:8090/images/grilled-steelhead-trout-sandwich.jpg"}
+4	Pesto Linguini	Stewed sliced beef with yellow onions and garlic in a vinegar-soy sauce. Served with steamed jasmine rice and sautéed vegetables.	9	entrees	{"relative": "http://localhost:8090/images/pesto-linguini.jpg"}
+6	Italian Salad	Garlic, red onions, tomatoes, mushrooms, and olives on top of romaine lettuce."	5	appetizers	{"relative": "http://localhost:8090/images/italian-salad.jpg"}
+1	Spaghetti and Meatballs	Seasoned meatballs on top of freshly-made spaghetti. Served with a robust tomato sauce.	9	entrees	{"relative": "http://localhost:8090/images/spaghetti-and-meatballs.jpg"}
+5	Chicken Noodle Soup	Delicious chicken simmered alongside yellow onions, carrots, celery, and bay leaves, chicken stock.	3	appetizers	{"relative": "http://localhost:8090/images/chicken-noodle-soup.jp2"}
 \.
 
 
@@ -147,7 +152,7 @@ SELECT pg_catalog.setval('public."Category_id_seq"', 5, true);
 -- Name: MenuItem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: or-user
 --
 
-SELECT pg_catalog.setval('public."MenuItem_id_seq"', 1, true);
+SELECT pg_catalog.setval('public."MenuItem_id_seq"', 6, true);
 
 
 --
