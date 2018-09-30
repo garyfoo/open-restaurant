@@ -127,7 +127,7 @@ COPY public."MenuItem" (id, name, description, price, category, image_url) FROM 
 4	Pesto Linguini	Stewed sliced beef with yellow onions and garlic in a vinegar-soy sauce. Served with steamed jasmine rice and sautéed vegetables.	9	entrees	{"relative": "http://localhost:8090/images/pesto-linguini.jpg"}
 6	Italian Salad	Garlic, red onions, tomatoes, mushrooms, and olives on top of romaine lettuce."	5	appetizers	{"relative": "http://localhost:8090/images/italian-salad.jpg"}
 1	Spaghetti and Meatballs	Seasoned meatballs on top of freshly-made spaghetti. Served with a robust tomato sauce.	9	entrees	{"relative": "http://localhost:8090/images/spaghetti-and-meatballs.jpg"}
-5	Chicken Noodle Soup	Delicious chicken simmered alongside yellow onions, carrots, celery, and bay leaves, chicken stock.	3	appetizers	{"relative": "http://localhost:8090/images/chicken-noodle-soup.jp2"}
+5	Chicken Noodle Soup	Delicious chicken simmered alongside yellow onions, carrots, celery, and bay leaves, chicken stock.	3	appetizers	{"relative": "http://localhost:8090/images/chicken-noodle-soup.jpeg"}
 \.
 
 
