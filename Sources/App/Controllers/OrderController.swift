@@ -24,13 +24,13 @@ struct OrderController: RouteCollection {
 //                }
 //            }
 //        }
-        let test = orderIds.map { orderId in
-            return try MenuItem.query(on: req).filter(\.id == orderId).flatMap { menuItem in
-                if let category = menuItem?.category {
-                    self.processOrderTime(category: category)
-                }
-            }
-        }
+//        let test = orderIds.map { orderId in
+//            return try MenuItem.query(on: req).filter(\.id == orderId).flatMap { menuItem in
+//                if let category = menuItem?.category {
+//                    self.processOrderTime(category: category)
+//                }
+//            }
+//        }
         return MenuItem.query(on: req).filter(\.id ~~ orderIds).all().map { items in
             let waitingTime = items.map { self.processOrderTime(category: $0.category) }
             let waitingTimeSum = waitingTime.reduce(0, +)

@@ -7,36 +7,36 @@
 
 
 import Vapor
-import App
+//import App
 import FluentPostgreSQL
 
 extension Application {
     
-    static func testable(envArgs: [String]? = nil) throws -> Application {
-        
-        var config = Config.default()
-        var services = Services.default()
-        var env = Environment.testing
-        
-        if let environmentArgs = envArgs {
-            env.arguments = environmentArgs
-        }
-        
-        try App.configure(&config, &env, &services)
-        let app = try Application(config: config, environment: env, services: services)
-        
-        try App.boot(app)
-        return app
-    }
+//    static func testable(envArgs: [String]? = nil) throws -> Application {
+//
+//        var config = Config.default()
+//        var services = Services.default()
+//        var env = Environment.testing
+//
+//        if let environmentArgs = envArgs {
+//            env.arguments = environmentArgs
+//        }
+//
+//        try App.configure(&config, &env, &services)
+//        let app = try Application(config: config, environment: env, services: services)
+//
+//        try App.boot(app)
+//        return app
+//    }
     
-    static func reset() throws {
-        let revertEnvironment = ["vapor", "revert", "--all", "-y"]
-        try Application.testable(envArgs: revertEnvironment).asyncRun().wait()
-        
-        let migrateEnvironment = ["vapor", "migrate", "-y"]
-        try Application.testable(envArgs: migrateEnvironment).asyncRun().wait()
-    }
-    
+//    static func reset() throws {
+//        let revertEnvironment = ["vapor", "revert", "--all", "-y"]
+//        try Application.testable(envArgs: revertEnvironment).asyncRun().wait()
+//
+//        let migrateEnvironment = ["vapor", "migrate", "-y"]
+//        try Application.testable(envArgs: migrateEnvironment).asyncRun().wait()
+//    }
+//
     // Define a method that sends a request to a path and returns a Response. Allow the HTTP method and headers to be set;
     // this is for later tests. Also allow an optional, generic Content to be provided for the body.
     func sendRequest<T>(to path: String, method: HTTPMethod, headers: HTTPHeaders = .init(), body: T? = nil) throws -> Response where T: Content {
