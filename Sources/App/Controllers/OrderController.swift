@@ -16,24 +16,17 @@ struct OrderController: RouteCollection {
     }
     
     func orderHandler(_ req: Request, data: Order) throws -> Future<PreparationTime> {
-        let orderIds = data.menuIds
-//        let waitingTime2 = orderIds.map { orderId in
-//            try MenuItem.query(on: req).filter(\.id == orderId).flatMap { menuItem in
-//                if let category = menuItem?.category {
-//                    self.processOrderTime(category: category)
-//                }
-//            }
-//        }
-//        let test = orderIds.map { orderId in
-//            return try MenuItem.query(on: req).filter(\.id == orderId).flatMap { menuItem in
-//                if let category = menuItem?.category {
-//                    self.processOrderTime(category: category)
-//                }
-//            }
-//        }
-        return MenuItem.query(on: req).filter(\.id ~~ orderIds).all().map { items in
-            let waitingTime = items.map { self.processOrderTime(category: $0.category) }
-            let waitingTimeSum = waitingTime.reduce(0, +)
+        let menuItems = data.menuIds.map { orderId in
+            return MenuItem.query(on: req).filter(\.id == orderId).first().map(to: MenuItem.self) { menuItem in
+                guard let menuItem = menuItem else {
+                    throw Abort(.notFound)
+                }
+                return menuItem
+            }
+        }
+        return menuItems.map(to: PreparationTime.self, on: req) { items in
+            let waitingTimeArray = items.map { self.processOrderTime(category: $0.category) }
+            let waitingTimeSum = waitingTimeArray.reduce(0, +)
             return PreparationTime(prepTime: waitingTimeSum)
         }
     }
